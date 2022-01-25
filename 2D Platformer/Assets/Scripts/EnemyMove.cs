@@ -59,6 +59,6 @@ public class EnemyMove : MonoBehaviour
         spriteRenderer.flipX = nextMove == 1;
 
         CancelInvoke();
-        Invoke("Think", 5);
+        Invoke("Think", 2);
     }
 }

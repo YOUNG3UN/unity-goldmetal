@@ -62,13 +62,44 @@ public class PlayerMove : MonoBehaviour
             Debug.DrawRay(rigid.position, Vector3.down, new Color(0, 1, 0));
             RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 1, LayerMask.GetMask("Platform"));
             if (rayHit.collider != null) // 맞지 않았다면
-            {
                 if (rayHit.distance < 0.5f)  // Player의 절반 크기
                 {
                     //Debug.Log(rayHit.collider.name);
                     anim.SetBool("isJumping", false);
                 }
-            }
         }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Enemy")
+        {
+            // Debug.Log("플레이어가 맞았습니다.");
+            OnDamaged(collision.transform.position);
+        }
+    }
+
+    void OnDamaged(Vector2 targetPos)
+    {
+        // Change Layer (Immortal Active)
+        gameObject.layer = 11;
+
+        // View Alpha
+        spriteRenderer.color = new Color(1, 1, 1, 0.4f);
+
+        // Reaction Force
+        int dirc = transform.position.x - targetPos.x > 0 ? 1 : -1; 
+        rigid.AddForce(new Vector2(dirc, 1) * 7, ForceMode2D.Impulse);
+
+        // Animation
+        anim.SetTrigger("doDamaged");
+
+        Invoke("OffDamaged", 3);
+    }
+
+    void OffDamaged()
+    {
+        gameObject.layer = 10;
+        spriteRenderer.color = new Color(1, 1, 1, 1);
     }
 }
