@@ -5,12 +5,20 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour
 {
     public GameManager gameManager;
+    public AudioClip audioJump;
+    public AudioClip audioAttack;
+    public AudioClip audioDamaged;
+    public AudioClip audioItem;
+    public AudioClip audioDie;
+    public AudioClip audioFinish;
     public float maxSpeed;
     public float jumpPower;
+
     Rigidbody2D rigid;
     SpriteRenderer spriteRenderer;
     CapsuleCollider2D capsuleCollider;
     Animator anim;
+    AudioSource audioSource;
 
     void Awake()
     {
@@ -18,6 +26,7 @@ public class PlayerMove : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         capsuleCollider = GetComponent<CapsuleCollider2D>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -27,6 +36,7 @@ public class PlayerMove : MonoBehaviour
         {
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
             anim.SetBool("isJumping", true);
+            PlaySound("JUMP");
         }
 
         // Stop Speed
@@ -108,11 +118,17 @@ public class PlayerMove : MonoBehaviour
 
             // Deactive Item
             collision.gameObject.SetActive(false);
+
+            // Sound
+            PlaySound("ITEM");
         }
         else if(collision.gameObject.tag == "Finish")
         {
             // Next Stage
             gameManager.NextStage();
+
+            // Sound
+            PlaySound("FINISH");
         }
     }
 
@@ -123,6 +139,9 @@ public class PlayerMove : MonoBehaviour
 
         // Reaction Force
         rigid.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+
+        // Sound
+        PlaySound("ATTACK");
 
         // Enemy Die
         EnemyMove enemyMove = enemy.GetComponent<EnemyMove>();
@@ -147,6 +166,9 @@ public class PlayerMove : MonoBehaviour
         // Animation
         anim.SetTrigger("doDamaged");
 
+        // Sound
+        PlaySound("DAMAGED");
+
         Invoke("OffDamaged", 3);
     }
 
@@ -169,10 +191,39 @@ public class PlayerMove : MonoBehaviour
 
         // Die Effect Jump
         rigid.AddForce(Vector2.up * 5, ForceMode2D.Impulse);
+
+        // Sound
+        PlaySound("DIE");
     }
 
     public void VelocityZero()
     {
         rigid.velocity = Vector2.zero;
+    }
+
+    void PlaySound(string action)
+    {
+        switch (action)
+        {
+            case "JUMP":
+                audioSource.clip = audioJump;
+                break;
+            case "ATTACK":
+                audioSource.clip = audioAttack;
+                break;
+            case "DAMAGED":
+                audioSource.clip = audioDamaged;
+                break;
+            case "ITEM":
+                audioSource.clip = audioItem;
+                break;
+            case "DIE":
+                audioSource.clip = audioDie;
+                break;
+            case "FINISH":
+                audioSource.clip = audioFinish;
+                break;
+        }
+        audioSource.Play();
     }
 }
