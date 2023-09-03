@@ -8,6 +8,8 @@ Youtube [골드메탈](https://www.youtube.com/@goldmetal) [유니티 기초 강
 
 공을 방향키로 움직이고 지형을 뛰어넘습니다. 아이템을 모두 획득하고 목표지점에 도달합니다.
 
+<br>
+
 ## 2. 2D Platformer
 
 <img width="250" src="https://user-images.githubusercontent.com/77961304/155697626-a2a32588-caab-435e-ad9b-ddffe2d07e8e.png"> <img width="250" src="https://user-images.githubusercontent.com/77961304/155697627-0f11cb2f-6e33-4af5-aa38-69efc4416a94.png"> <img width="250" 
@@ -18,6 +20,8 @@ src="https://user-images.githubusercontent.com/77961304/155697621-8950926e-d04b-
 장애물과 몬스터에 닿으면 생명이 줄어들고, 몬스터는 밟아서 없앨 수 있습니다.
 
 코인과 몬스터를 통해 점수를 획득합니다.
+
+<br>
 
 ## 3. Top-Down 2D RPG
 
