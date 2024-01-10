@@ -22,7 +22,3 @@ src="https://user-images.githubusercontent.com/77961304/155697621-8950926e-d04b-
 코인과 몬스터를 통해 점수를 획득합니다.
 
 <br>
-
-## 3. Top-Down 2D RPG
-
-대화 및 퀘스트 시스템을 이용하는 RPG 게임입니다.
